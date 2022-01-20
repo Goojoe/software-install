@@ -1,5 +1,5 @@
 # 宝塔面板
-[官网安装教程](https://www.bt.cn/bbs/thread-19376-1-1.html)
+## [官网教程](https://www.bt.cn/bbs/thread-19376-1-1.html)
 
 > 安装要求：
 > 内存：512M以上，推荐768M以上（纯面板约占系统60M内存）
