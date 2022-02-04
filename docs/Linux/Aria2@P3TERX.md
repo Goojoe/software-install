@@ -60,6 +60,47 @@ wget -N git.io/aria2.sh && chmod +x aria2.sh
  请输入数字 [0-12]:
 ```
 
+如果你卡住了或者是其他原因装不上，可以使用代理脚本
+
+使用以下脚本,by[听风](https://cxjiang.top/2018/08/18/rclone-googledrive/)
+
+代理配置脚本
+在`/etc/profile/`最底部添加以下配置,全用户生效
+
+```
+# proxy list
+ function proxyoff(){
+     unset http_proxy
+     unset https_proxy
+     unset socks5_proxy
+     echo -e "已关闭代理"
+ }
+
+ function proxyon() {
+     export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
+     export http_proxy="127.0.0.1:1080"    #此处改为自己的http代理端口
+     export https_proxy=$http_proxy
+     export socks5_proxy="127.0.0.1:1081"  #此处改为自己的socks代理端口
+     echo -e "已开启代理"
+ }
+```
+![](https://img.goojoe.cc/2022/02/02/VVOTo2Df.webp)
+修改好配置文件中的代理IP和端口后,输入
+```bash
+#刷新环境变量配置文件
+source /etc/profile
+# 开启代理
+proxyon
+```
+`proxyoff`可以关闭代理
+使用export查看是否成功
+```bash
+export -p
+```
+![](https://img.goojoe.cc/2022/02/02/CLiSzn9j.webp)
+
+>  这样就是成功的。我这个服务器是在家里的所以才是192.168.2.2
+
 ## 其他操作
 
 启动：`/etc/init.d/aria2 start` | `service aria2 start`
