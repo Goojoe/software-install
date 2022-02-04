@@ -1,48 +1,48 @@
 
 @echo off
  
-title GITä¸€é”®æäº¤
+title GITÒ»¼üÌá½»
 color 3
-echo å½“å‰ç›®å½•æ˜¯ï¼š%cd%
+echo µ±Ç°Ä¿Â¼ÊÇ£º%cd%
 echo;
  
-echo å¼€å§‹æ·»åŠ å˜æ›´ï¼šgit add .
+echo ¿ªÊ¼Ìí¼Ó±ä¸ü£ºgit add .
 git add .
 echo;
  
-set /p declation=è¾“å…¥æäº¤çš„commitä¿¡æ¯:
+set /p declation=ÊäÈëÌá½»µÄcommitĞÅÏ¢:
 git commit -m "%declation%"
 echo;
  
-echo å°†å˜æ›´æƒ…å†µæäº¤åˆ°è¿œç¨‹è‡ªå·±åˆ†æ”¯ï¼šgit push origin hlt
+echo ½«±ä¸üÇé¿öÌá½»µ½Ô¶³Ì×Ô¼º·ÖÖ§£ºgit push origin hlt
 git push origin hlt
 echo;
  
-echo åˆ‡æ¢ä¸»åˆ†æ”¯ï¼šgit checkout master
+echo ÇĞ»»Ö÷·ÖÖ§£ºgit checkout master
 git checkout master
 echo;
  
-echo æœ¬åœ°ä¸»åˆ†æ”¯æ‹‰å–è¿œç¨‹ä¸»åˆ†æ”¯ï¼šgit pull origin master
+echo ±¾µØÖ÷·ÖÖ§À­È¡Ô¶³ÌÖ÷·ÖÖ§£ºgit pull origin master
 git pull origin master
 echo;
  
-echo ä¸»åˆ†æ”¯åˆå¹¶åˆ†æ”¯ï¼šgit merge hlt
+echo Ö÷·ÖÖ§ºÏ²¢·ÖÖ§£ºgit merge hlt
 git merge hlt
 echo;
  
-echo å°†å˜æ›´æƒ…å†µæäº¤åˆ°è¿œç¨‹ä¸»åˆ†æ”¯ï¼šgit push origin master
+echo ½«±ä¸üÇé¿öÌá½»µ½Ô¶³ÌÖ÷·ÖÖ§£ºgit push origin master
 git push origin master
 echo;
  
-echo åˆ‡æ¢åˆ†æ”¯ï¼šgit checkout hlt
+echo ÇĞ»»·ÖÖ§£ºgit checkout hlt
 git checkout hlt
 echo;
  
-echo æœ¬åœ°åˆ†æ”¯æ‹‰å–è¿œç¨‹ä¸»åˆ†æ”¯ï¼šgit pull origin master
+echo ±¾µØ·ÖÖ§À­È¡Ô¶³ÌÖ÷·ÖÖ§£ºgit pull origin master
 git pull origin master
 echo;
  
-echo æ‰§è¡Œå®Œæ¯•ï¼
+echo Ö´ĞĞÍê±Ï£¡
 echo;
  
 pause
