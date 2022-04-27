@@ -568,3 +568,117 @@ WantedBy=multi-user.target
 > CC BY-SA 4.0
 >
 > 署名-相同方式共享（BY-SA）：使用者可以对本创作进行转载、节选、混编、二次创作，可以将其运用于商业用途，唯须署名作者，并且采用本创作的内容必须同样采用本协议进行授权
+
+# [Nginx-RTMP](https://juejin.cn/post/7009578742385213448)
+
+```yml
+version: '3.1'
+services:
+  nginx-rtmp-test:
+    restart: always
+    image: alfg/nginx-rtmp
+    container_name: nginx-rtmp-test
+    ports:
+      - 1935:1935
+      - 8080:80
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./html:/usr/share/nginx/html
+      - ./log:/var/log/nginx
+```
+
+创建`nginx.conf`文件填入
+
+```conf
+# user 指定运行 nginx 的用户和组（第一个参数为用户第二个为组，这里只有用户）
+user  root;
+# 指定工作进程数（一般设置为CPU核数）
+worker_processes  1;
+
+# nginx 连接配置模块
+events {
+    # 指定每个工作进程最大连接数为 1024
+    worker_connections  1024;
+}
+
+#RTMP 服务（重点）
+rtmp {   
+    server{
+        #指定服务端口
+        listen 1935;     # //RTMP协议使用的默认端口  
+        chunk_size 4000; # //RTMP分块大小
+
+        #指定 HLS 流应用
+        application hls { # hls为流应用的名称，可以随便填
+            live on;     # //打开直播流        
+            hls on;      # //打开 HLS        
+            hls_path /tmp/hls;    
+        }
+    }
+}  
+
+# http 配置模块
+http {
+    # 通过 include 加载 mime.types 文件，里面的 types {} 模块将文件扩展名映射到响应的 MIME 类型
+    include       mime.types;
+    # 定义响应的默认 MIME 类型
+    default_type  application/octet-stream;
+
+    # 启用或者禁用 sendfile()
+    sendfile        on;
+
+    # 65 s 超时
+    keepalive_timeout  65;
+
+    # etag
+    etag on;
+    # 过期时间
+    expires 7d;
+
+    # 虚拟主机配置模块
+    server {
+        # 监听 8080 端口
+        listen       8080;
+        # 监听域名为 localhost
+        server_name  localhost;
+        
+        location /hls { 
+            # Serve HLS fragments 
+            types { 
+                application/vnd.apple.mpegurl m3u8; 
+                video/mp2t ts; 
+            } 
+            root /tmp; 
+            add_header Cache-Control no-cache; 
+        }
+    }
+}
+```
+
+### 启动Nginx流媒体服务器
+
+```
+docker-compose up -d
+```
+
+### 检查启动状态
+
+```shell
+netstat -ntpl | grep 1935
+```
+
+## OBS推流
+
+服务：选择自定义
+
+服务器：rtmp://<ip>:1935/stream
+
+串流密钥：随便填，相当于房间号
+
+## HLS流
+
+服务：选择自定义
+
+服务器：rtmp://<ip>:1935/hls
+
+串流密钥：随便填，相当于房间号
